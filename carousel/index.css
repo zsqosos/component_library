@@ -1,0 +1,64 @@
+.banner {
+    height: 325px;
+    width: 812px;
+    position: relative;
+    overflow: hidden;
+}
+.banner ul{
+    padding: 0;
+    margin: 0;
+}
+.banner ul li{
+    top: 0;
+    left: 0;
+    list-style: none;
+    position: absolute;
+}
+.banner ul li img{
+    height: 325px;
+    width: 812px;
+    display: block;
+}
+.ban-btn{
+    width: 100%;
+    position: absolute;
+    top: 136px;
+    z-index: 2;
+}
+.ban-btn a{
+    display: inline-block;
+    height: 60px;
+    width: 35px;
+    background: rgba(180,180,180,0.5);
+    font-size: 25px;
+    text-align: center;
+    line-height: 60px;
+    color: #fff;
+    text-decoration: none;
+}
+.next-btn{
+    float: right;
+}
+.prev-btn{
+    float: left;
+}
+.ban-btn a:hover{
+    background: rgba(100,100,100,0.5);
+}
+.indicator{
+    width: 100%;
+    position: absolute;
+    text-align: center;
+    bottom: 15px;
+    z-index: 2;
+}
+.indicator a{
+    display: inline-block;
+    width: 20px;
+    height: 5px;
+    margin:0 3px;
+    background: #fff;
+}
+.indicator-active{
+    background: #FF8C00!important;
+}
