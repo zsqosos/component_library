@@ -1,3 +1,5 @@
+// 单独对象形式
+
 $.carousel = {
     now : 0,                    //当前显示的图片索引
     hasStarted : false,         //是否开始轮播

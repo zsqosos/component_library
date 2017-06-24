@@ -1,4 +1,6 @@
-function Carousel() {
+// 单独采用构造函数形式
+
+function Carousel(bannnerBox, aBox, btnBox) {
     this.now = 0;                    //当前显示的图片索引
     this.hasStarted = false;        //是否开始轮播
     this.interval = null;            //定时器
@@ -13,7 +15,7 @@ function Carousel() {
      * @param aBox  string 包含指示器的盒子的id或class
      * @param btnBox string 包含前后按钮的盒子的id或class
      */
-    this.startPlay = function (bannnerBox, aBox, btnBox) {
+    this.init = function () {
         //初始化对象参数
         var that = this;
         this.liItems = $(bannnerBox).find('ul').find('li');
@@ -90,8 +92,10 @@ function Carousel() {
         clearInterval(this.interval);
         this.hasStarted = false;
     }
+
+    //初始化
+    this.init()
 };
 $(function () {
-    var banner1 = new Carousel();
-    banner1.startPlay('#J_bg_ban', '#J_bg_indicator', '#J_bg_btn');
+     var banner1 = new Carousel('#J_bg_ban', '#J_bg_indicator', '#J_bg_btn');
 })
