@@ -1,5 +1,5 @@
     // 构造函数加原型形式
-    
+
     /**
      * 构造函数初始化及开始轮播
      * @param bannnerBox string 包含整个轮播图盒子的id或class
@@ -71,49 +71,51 @@
         this.start();
     }
 
-    Carousel.prototype = {
-        /**
-         * 播放函数
-         * @param out number 要消失的图片的索引值
-         * @param now number 接下来要轮播的图的索引值
-         */
-        play: function (out, now) {
-            this.liItems.eq(out).stop().animate({
-                opacity: 0,
-                'z-index': 0
-            }, 500).end().eq(now).stop().animate({
-                opacity: 1,
-                'z-index': 1
-            }, 500);
-            this.aBox.find('a').removeClass('indicator-active').eq(now).addClass('indicator-active');
-        },
-        //前一张函数
-        prev: function () {
-            var out = this.now;
-            this.now = (--this.now + this.len) % this.len;
-            this.play(out, this.now)
-        },
-        //后一张函数
-        next: function () {
-            var out = this.now;
-            this.now = ++this.now % this.len;
-            this.play(out, this.now);
-        },
-        //开始函数
-        start: function () {
-            if (!this.hasStarted) {
-                this.hasStarted = true;
-                var that = this;
-                this.interval = setInterval(function () {
-                    that.next();
-                }, 2000);
-            }
-        },
-        //停止函数
-        stop: function () {
-            clearInterval(this.interval);
-            this.hasStarted = false;
+
+    /**
+     * 播放函数
+     * @param out number 要消失的图片的索引值
+     * @param now number 接下来要轮播的图的索引值
+     */
+    Carousel.prototype.play = function (out, now) {
+        this.liItems.eq(out).stop().animate({
+            opacity: 0,
+            'z-index': 0
+        }, 500).end().eq(now).stop().animate({
+            opacity: 1,
+            'z-index': 1
+        }, 500);
+        this.aBox.find('a').removeClass('indicator-active').eq(now).addClass('indicator-active');
+    }
+
+    //前一张函数
+    Carousel.prototype.prev = function () {
+        var out = this.now;
+        this.now = (--this.now + this.len) % this.len;
+        this.play(out, this.now)
+    }
+
+    //后一张函数
+    Carousel.prototype.next = function () {
+        var out = this.now;
+        this.now = ++this.now % this.len;
+        this.play(out, this.now);
+    }
+
+    //开始函数
+    Carousel.prototype.start = function () {
+        if (!this.hasStarted) {
+            this.hasStarted = true;
+            var that = this;
+            this.interval = setInterval(function () {
+                that.next();
+            }, 2000);
         }
+    }
+    //停止函数
+    Carousel.prototype.stop = function () {
+        clearInterval(this.interval);
+        this.hasStarted = false;
     }
 
     $(function () {
