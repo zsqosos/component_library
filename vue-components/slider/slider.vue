@@ -47,10 +47,18 @@ export default {
       if (!this.slider) {
         return
       }
-      this._setSliderWidth(true)
+      setTimeout(() => {
+        this.refresh()
+      }, 20)
     })
   },
   methods: {
+    refresh() {
+      if (this.slider) {
+        this._setSliderWidth(true)
+        this.slider.refresh()
+      }
+    },
     _setSliderWidth(isResize) {
       this.children = this.$refs.sliderGroup.children
 
@@ -75,14 +83,22 @@ export default {
         scrollX: true,
         scrollY: false,
         momentum: false,
-        snap: true,
-        snapLoop: this.loop,
-        snapThreshold: 0.3,
-        snapSpeed: 400,
+        snap: {
+          loop: this.loop,
+          threshold: 0.3,
+          speed: 400
+        },
         click: true
       })
 
       this.slider.on('scrollEnd', this._scrollEnd)
+
+      this.slider.on('touchend', () => {
+        if (this.autoPlay) {
+          this._play()
+        }
+      })
+
       this.slider.on('beforeScrollStart', () => {
         if (this.autoPlay) {
           clearTimeout(this.timer)
@@ -100,19 +116,34 @@ export default {
       }
     },
     _play() {
-      let pageIndex = this.currentPageIndex + 1
-      if (this.loop) {
-        pageIndex += 1
-      }
+      let pageIndex = this.slider.getCurrentPage().pageX + 1
+      clearTimeout(this.timer)
       this.timer = setTimeout(() => {
         this.slider.goToPage(pageIndex, 0, 400)
       }, this.interval)
     }
+  },
+  activated() {
+    let pageIndex = this.slider.getCurrentPage().pageX
+    if (pageIndex > this.dots.lenght) {
+      pageIndex = pageIndex % this.dots.length
+    }
+    this.slider.goToPage(pageIndex, 0, 0)
+    if (this.loop) {
+      pageIndex -= 1
+    }
+    this.currentPageIndex = pageIndex
+    if (this.autoPlay) {
+      this._play()
+    }
+  },
+  deactivated() {
+    clearTimeout(this.timer)
   }
 }
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
   @import "~common/stylus/variable"
 
   .slider
