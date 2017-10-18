@@ -1,3 +1,8 @@
+/**
+ * 
+ * @param {Object} date date对象  
+ * @param {String} fmt yyyy-MM-dd-hh:mm:ss
+ */
 export function formatDate(date, fmt) {
   //匹配年字符串，若可以匹配，则执行替换
   if (/(y+)/.test(fmt)) {
